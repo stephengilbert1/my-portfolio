@@ -1,6 +1,6 @@
 // src/app/projects/[slug]/page.tsx
-import { projects } from "@/lib/projectData";
 import { notFound } from "next/navigation";
+import { projects } from "@/lib/projectData";
 
 type Props = {
   params: {
@@ -8,7 +8,7 @@ type Props = {
   };
 };
 
-export default async function ProjectPage({ params }: Props) {
+export default function ProjectPage({ params }: Props) {
   const project = projects.find((p) => p.slug === params.slug);
 
   if (!project) {
@@ -21,12 +21,10 @@ export default async function ProjectPage({ params }: Props) {
         {project.title}
       </h1>
       <p className="text-slate-700 mb-6">{project.description}</p>
-      {/* Add more project details here if needed */}
     </main>
   );
 }
 
-// ✅ Static params for prerendering
 export function generateStaticParams() {
   return projects.map((project) => ({
     slug: project.slug,
