@@ -25,3 +25,10 @@ export default function ProjectPage({ params }: Props) {
     </main>
   );
 }
+
+// ✅ Static params for prerendering
+export function generateStaticParams() {
+  return projects.map((project) => ({
+    slug: project.slug,
+  }));
+}
