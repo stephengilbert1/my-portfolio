@@ -2,12 +2,16 @@
 import { notFound } from "next/navigation";
 import { projects } from "@/lib/projectData";
 
+export function generateStaticParams() {
+  return projects.map((project) => ({
+    slug: project.slug,
+  }));
+}
+
 export default function ProjectPage({ params }: { params: { slug: string } }) {
   const project = projects.find((p) => p.slug === params.slug);
 
-  if (!project) {
-    notFound();
-  }
+  if (!project) return notFound();
 
   return (
     <main className="max-w-3xl mx-auto px-6 py-16">
@@ -17,10 +21,4 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
       <p className="text-slate-700 mb-6">{project.description}</p>
     </main>
   );
-}
-
-export function generateStaticParams() {
-  return projects.map((project) => ({
-    slug: project.slug,
-  }));
 }
