@@ -8,7 +8,7 @@ type Props = {
   };
 };
 
-export default function ProjectPage({ params }: Props) {
+export default async function ProjectPage({ params }: Props) {
   const project = projects.find((p) => p.slug === params.slug);
 
   if (!project) {
