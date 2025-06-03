@@ -2,22 +2,17 @@
 import { notFound } from "next/navigation";
 import { projects } from "@/lib/projectData";
 
-type ProjectPageProps = {
-  params: {
-    slug: string;
-  };
-};
+export default async function ProjectPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const project = projects.find((p) => p.slug === slug);
 
-export async function generateStaticParams() {
-  return projects.map((project) => ({
-    slug: project.slug,
-  }));
-}
-
-export default function ProjectPage({ params }: ProjectPageProps) {
-  const project = projects.find((p) => p.slug === params.slug);
-
-  if (!project) return notFound();
+  if (!project) {
+    notFound();
+  }
 
   return (
     <main className="max-w-3xl mx-auto px-6 py-16">
