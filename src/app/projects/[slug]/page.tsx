@@ -12,7 +12,7 @@ export default function ProjectPage({ params }: Props) {
   const project = projects.find((p) => p.slug === params.slug);
 
   if (!project) {
-    return notFound();
+    notFound();
   }
 
   return (
