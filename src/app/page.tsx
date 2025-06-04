@@ -1,58 +1,27 @@
-// src/app/projects/page.tsx
-import { projects } from "@/lib/projectData";
-import Link from "next/link";
-
-export default function ProjectsPage() {
+export default function Home() {
   return (
-    <main className="max-w-5xl mx-auto px-6 py-16">
-      <h1 className="text-4xl font-bold text-slate-900 mb-10">Projects</h1>
-
-      <div className="grid gap-8 sm:grid-cols-2">
-        {projects.map((project) => (
-          <div
-            key={project.title}
-            className="rounded-2xl border border-slate-200 p-6 shadow-sm bg-white"
+    <main className="max-w-3xl mx-auto px-6 py-20 text-center">
+      <section className="max-w-3xl mx-auto px-6 py-20 text-center">
+        <h1 className="text-5xl font-bold text-slate-900">Stephen Gilbert</h1>
+        <p className="mt-4 text-lg text-slate-600">
+          Mechatronics Engineer pivoting into software development. Building
+          applications to solve real-world problems.
+        </p>
+        <div className="mt-6 flex justify-center gap-4">
+          <a
+            href="/projects"
+            className="px-5 py-2 text-white bg-slate-900 rounded-lg hover:bg-slate-700 transition"
           >
-            <Link href={`/projects/${project.slug}`}>
-              <h2 className="text-xl font-semibold text-slate-800 hover:underline">
-                {project.title}
-              </h2>
-            </Link>
-
-            <p className="mt-2 text-sm text-slate-600">{project.description}</p>
-
-            <div className="mt-4 flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="bg-slate-100 text-slate-700 text-xs px-2 py-1 rounded"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            <div className="mt-4 flex gap-4 text-sm">
-              <Link
-                href={project.githubUrl}
-                target="_blank"
-                className="text-sky-600 hover:underline"
-              >
-                GitHub
-              </Link>
-              {project.demoUrl && (
-                <Link
-                  href={project.demoUrl}
-                  target="_blank"
-                  className="text-sky-600 hover:underline"
-                >
-                  Live Demo
-                </Link>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
+            View Projects
+          </a>
+          <a
+            href="mailto:your.email@example.com"
+            className="px-5 py-2 border border-slate-900 rounded-lg hover:bg-slate-100 transition"
+          >
+            Contact
+          </a>
+        </div>
+      </section>
     </main>
   );
 }

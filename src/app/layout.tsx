@@ -1,6 +1,7 @@
 // src/app/layout.tsx
 import Link from "next/link";
 import "./globals.css";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 export const metadata = {
   title: "Stephen Gilbert Portfolio",
@@ -30,9 +31,27 @@ export default function RootLayout({
           </div>
         </nav>
         <main className="flex-grow">{children}</main>
-        <footer className="px-6 py-4 border-t text-sm text-center text-slate-500">
-          © {new Date().getFullYear()} Stephen Gilbert. GitHub | LinkedIn |
-          Email
+        <footer className="py-6 text-center text-sm text-slate-500 border-t mt-12">
+          <p>© {new Date().getFullYear()} Stephen Gilbert</p>
+          <div className="mt-2 flex justify-center gap-4 text-slate-600">
+            <a
+              href="https://github.com/stephengilbert1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Github className="w-5 h-5 hover:text-black" />
+            </a>
+            <a href="mailto:stephengilbert1@gmail.com">
+              <Mail className="w-5 h-5 hover:text-black" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/stephenjgilbert"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Linkedin className="w-5 h-5 hover:text-black" />
+            </a>
+          </div>
         </footer>
       </body>
     </html>
