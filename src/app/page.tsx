@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main className="max-w-3xl mx-auto px-6 py-20 text-center">
@@ -8,12 +10,12 @@ export default function Home() {
           applications to solve real-world problems.
         </p>
         <div className="mt-6 flex justify-center gap-4">
-          <a
+          <Link
             href="/projects"
             className="px-5 py-2 text-white bg-slate-900 rounded-lg hover:bg-slate-700 transition"
           >
             View Projects
-          </a>
+          </Link>
           <a
             href="mailto:your.email@example.com"
             className="px-5 py-2 border border-slate-900 rounded-lg hover:bg-slate-100 transition"
