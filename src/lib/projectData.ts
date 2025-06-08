@@ -25,7 +25,7 @@ export const projects: Project[] = [
     slug: "transformer_tool_tailwind",
     description:
       "Estimates oil expansion due to temperature in distribution transformers. Used by field techs and planners.",
-    tags: ["Next.js", "Tailwind", "Forms"],
+    tags: ["Next.js", "Tailwind"],
     githubUrl: "https://github.com/stephengilbert1/transformer_tool_tailwind",
     demoUrl: "https://transformer-tool-tailwind.vercel.app/",
     category: "Transformers",
@@ -35,7 +35,7 @@ export const projects: Project[] = [
     slug: "sensor-config-flow",
     description:
       "Determines which sensor configuration to order depending on manufacturers process.",
-    tags: ["Next.js", "Tailwind CSS", "Form Logic", "UI Flow"],
+    tags: ["Next.js", "Tailwind CSS"],
     githubUrl: "https://github.com/stephengilbert1/sensor-config-flow",
     demoUrl: "https://sensor-config-flow.vercel.app/",
     category: "Transformers",
@@ -45,9 +45,19 @@ export const projects: Project[] = [
     slug: "ski-din-calculator",
     description:
       "Calculates ski binding DIN settings using ISO 11088 standard. Designed for skiers and techs.",
-    tags: ["Next.js", "React", "Form Logic"],
+    tags: ["Next.js", "React"],
     githubUrl: "https://github.com/stephengilbert1/ski-din-calculator",
     demoUrl: "https://ski-din-calculator-iota.vercel.app/",
+    category: "Sports",
+  },
+  {
+    title: "Mountain Bike Tire Pressure Calculator",
+    slug: "mtb-tire-pressure-calculator",
+    description:
+      "Recommends front and rear tire pressure based on rider and bike",
+    tags: ["Vue", "Vite", "Tailwind CSS"],
+    githubUrl: "https://github.com/stephengilbert1/mtb-tire-pressure",
+    demoUrl: "https://mtb-tire-pressure.vercel.app/",
     category: "Sports",
   },
   // Add more projects here as needed
