@@ -15,9 +15,17 @@ export const projects: Project[] = [
     title: "Transformer Temperature Dashboard",
     slug: "transformer-dashboard",
     description: "Monitors top oil temperature of transformers.",
-    tags: ["Next.js", "Tailwind CSS", "Recharts", "Data Viz", "Field Tools"],
-    githubUrl: "https://github.com/stephengilbert1/transformer_dashboard",
-    demoUrl: "https://transformer-dashboard.vercel.app/",
+    tags: [
+      "Fullstack",
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Supabase",
+    ],
+    githubUrl:
+      "https://github.com/stephengilbert1/Transformer-Dashboard-Fullstack",
+    demoUrl: "https://transformer-dashboard-fullstack.vercel.app/",
     category: "Transformers",
   },
   {
@@ -25,7 +33,7 @@ export const projects: Project[] = [
     slug: "transformer_tool_tailwind",
     description:
       "Estimates oil expansion due to temperature in distribution transformers. Used by field techs and planners.",
-    tags: ["Next.js", "Tailwind"],
+    tags: ["Frontend", "Next.js", "React", "Tailwind CSS"],
     githubUrl: "https://github.com/stephengilbert1/transformer_tool_tailwind",
     demoUrl: "https://transformer-tool-tailwind.vercel.app/",
     category: "Transformers",
@@ -35,7 +43,7 @@ export const projects: Project[] = [
     slug: "sensor-config-flow",
     description:
       "Determines which sensor configuration to order depending on manufacturers process.",
-    tags: ["Next.js", "Tailwind CSS"],
+    tags: ["Frontend", "Next.js", "React", "Tailwind CSS"],
     githubUrl: "https://github.com/stephengilbert1/sensor-config-flow",
     demoUrl: "https://sensor-config-flow.vercel.app/",
     category: "Transformers",
@@ -55,7 +63,7 @@ export const projects: Project[] = [
     slug: "mtb-tire-pressure-calculator",
     description:
       "Recommends front and rear tire pressure based on rider and bike",
-    tags: ["Vue", "Vite", "Tailwind CSS"],
+    tags: ["Vue", "Vite", "Tailwind CSS", "TypeScript"],
     githubUrl: "https://github.com/stephengilbert1/mtb-tire-pressure",
     demoUrl: "https://mtb-tire-pressure.vercel.app/",
     category: "Sports",
