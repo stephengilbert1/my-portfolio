@@ -1,19 +1,27 @@
 // src/app/projects/[slug]/page.tsx
 
 import { notFound } from "next/navigation";
-import { projects } from "@/lib/projectData"; // Your project list
+import { projects } from "@/lib/projectData";
 
-export default function ProjectPage({ params }: { params: { slug: string } }) {
-  const project = projects.find((p) => p.slug === params.slug);
-  if (!project) return notFound();
+export default async function ProjectPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const project = projects.find((p) => p.slug === slug);
+
+  if (!project) {
+    notFound();
+  }
 
   return (
     <main className="max-w-3xl mx-auto px-6 py-16">
       <h1 className="text-4xl font-bold text-slate-900 mb-4">
         {project.title}
       </h1>
-      <p className="text-slate-600 italic mb-6">{project.tags.join(" · ")}</p>
 
+      <p className="text-slate-600 italic mb-6">{project.tags.join(" · ")}</p>
       <p className="text-lg text-slate-700 mb-6">{project.description}</p>
 
       <h2 className="text-2xl font-semibold text-slate-800 mb-2">
