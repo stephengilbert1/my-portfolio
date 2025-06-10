@@ -3,6 +3,8 @@ export type Project = {
   title: string;
   slug: string;
   description: string;
+  why: string;
+  features: string[];
   tags: string[];
   githubUrl: string;
   demoUrl?: string;
@@ -14,7 +16,14 @@ export const projects: Project[] = [
   {
     title: "Transformer Temperature Dashboard",
     slug: "transformer-dashboard",
-    description: "Monitors top oil temperature of transformers.",
+    description:
+      "Monitors top oil temperatures in distribution transformers in real-time.",
+    why: "This tool allows electrical utilities to use temperature sensor data to monitor transformers and proactively size up an overloaded transformer before it leads to an outage.",
+    features: [
+      "Store key transformer metadata (Serial Number, type, kVA, manufacture date",
+      "Visualise real-time temperature history",
+      "Highlight transformers that are over threshold temperature",
+    ],
     tags: [
       "Fullstack",
       "Next.js",
@@ -32,7 +41,13 @@ export const projects: Project[] = [
     title: "Transformer Oil Expansion Calculator",
     slug: "transformer_tool_tailwind",
     description:
-      "Estimates oil expansion due to temperature in distribution transformers. Used by field techs and planners.",
+      "Estimates oil rise due to temperature in distribution transformers. Used by field techs and planners.",
+    why: "This tool helps designers, refurbishers, and field techs visualize how oil levels change from ambient to high operating temperatures—ensuring proper clearances around critical components.",
+    features: [
+      "Supports round (pole-top) and rectangular (pad-mount) tanks geometries",
+      "Metric and imperial unit options",
+      "Visual display of oil levels at ambient and elevated temperatures",
+    ],
     tags: ["Frontend", "Next.js", "React", "Tailwind CSS"],
     githubUrl: "https://github.com/stephengilbert1/transformer_tool_tailwind",
     demoUrl: "https://transformer-tool-tailwind.vercel.app/",
@@ -42,7 +57,12 @@ export const projects: Project[] = [
     title: "Sensor Coniguration Guide",
     slug: "sensor-config-flow",
     description:
-      "Determines which sensor configuration to order depending on manufacturers process.",
+      "Helps transformer manufacturers determine the correct sensor configuration based on their production process.",
+    why: "This tool makes it simple for transformer manufacturers to determine the right sensor configuration and submit an inquiry to the sales team.",
+    features: [
+      "Clear flowchart-style guidance",
+      "Contact form submits configuration choice with customer info directly to sales team",
+    ],
     tags: ["Frontend", "Next.js", "React", "Tailwind CSS"],
     githubUrl: "https://github.com/stephengilbert1/sensor-config-flow",
     demoUrl: "https://sensor-config-flow.vercel.app/",
@@ -53,6 +73,12 @@ export const projects: Project[] = [
     slug: "ski-din-calculator",
     description:
       "Calculates ski binding DIN settings using ISO 11088 standard. Designed for skiers and techs.",
+    why: "This tool makes it simple to calculate the correct front and rear DIN settings for your ski bindings, based on ISO 11088 safety standards.",
+    features: [
+      "Accounts for skier size, age, and skill level",
+      "Metric and imperial unit options",
+      "Clean, responsive layout",
+    ],
     tags: ["Next.js", "React"],
     githubUrl: "https://github.com/stephengilbert1/ski-din-calculator",
     demoUrl: "https://ski-din-calculator-iota.vercel.app/",
@@ -62,7 +88,12 @@ export const projects: Project[] = [
     title: "Mountain Bike Tire Pressure Calculator",
     slug: "mtb-tire-pressure-calculator",
     description:
-      "Recommends front and rear tire pressure based on rider and bike",
+      "Recommends front and rear tire pressure based on rider weight, tire size, and terrain.",
+    why: "This tool helps mountain bikers find suitable tire pressures for better grip, comfort, and flat protection. Customized for rider weight, tire size, and riding style.",
+    features: [
+      "Supports multiple tire widths and wheel sizes",
+      "Adjusts for terrain and riding style",
+    ],
     tags: ["Vue", "Vite", "Tailwind CSS", "TypeScript"],
     githubUrl: "https://github.com/stephengilbert1/mtb-tire-pressure",
     demoUrl: "https://mtb-tire-pressure.vercel.app/",
