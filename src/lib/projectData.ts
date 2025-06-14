@@ -54,6 +54,30 @@ export const projects: Project[] = [
     category: "Transformers",
   },
   {
+    title: "Yard Inspection Report",
+    slug: "yard-inspection-report",
+    description:
+      "Records transformer inspections in batches and stores data in a table.",
+    why: "This tool helps engineers collect meaningful data when in the field",
+    features: [
+      "Batch entry form for transformers with shared attributes",
+      "GraphQL API connected to a PostgreSQL database",
+      "Deployed to Vercel with Prisma schema synced to Neon DB",
+    ],
+    tags: [
+      "Fullstack",
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "GraphQL",
+      "PostgreSQL",
+      "Prisma",
+    ],
+    githubUrl: "https://github.com/stephengilbert1/yard-inspection-report",
+    demoUrl: "https://yard-inspection-report.vercel.app/",
+    category: "Data Collection",
+  },
+  {
     title: "Sensor Coniguration Guide",
     slug: "sensor-config-flow",
     description:
@@ -99,5 +123,6 @@ export const projects: Project[] = [
     demoUrl: "https://mtb-tire-pressure.vercel.app/",
     category: "Sports",
   },
+
   // Add more projects here as needed
 ];
