@@ -8,6 +8,14 @@ export type Project = {
   tags: string[];
   githubUrl: string;
   demoUrl?: string;
+  image1?: {
+    src: string;
+    caption: string;
+  };
+  image2?: {
+    src: string;
+    caption: string;
+  };
   category: string;
   longDescription?: string; // optional
 };
@@ -17,12 +25,14 @@ export const projects: Project[] = [
     title: "Transformer Temperature Dashboard",
     slug: "transformer-dashboard",
     description:
-      "Monitors top oil temperatures in distribution transformers in real-time.",
-    why: "This tool allows electrical utilities to use temperature sensor data to monitor transformers and proactively size up an overloaded transformer before it leads to an outage.",
+      "This dashboard monitors top oil temperatures in distribution transformers in real-time using a live Supabase backend. Helps visualize transformer performance and identify overheating risks.",
+    why: "This tool is aimed at the electrical utility industry which I am currently working on developing temperature sensors for. The dashboard allows utilities and asset managers to use temperature sensor data to monitor transformers and proactively size up an overloaded transformer before it leads to an outage.",
     features: [
-      "Store key transformer metadata (Serial Number, type, kVA, manufacture date",
+      "Real-time temperature updates via a scheduled cron job.",
+      "Filter, search, and sort transformer by Serial Number or attribute",
+      "Store key transformer metadata",
       "Visualise real-time temperature history",
-      "Highlight transformers that are over threshold temperature",
+      "Interactive chart with selectable time ranges (1d, 1w, 1m)",
     ],
     tags: [
       "Fullstack",
@@ -31,10 +41,22 @@ export const projects: Project[] = [
       "TypeScript",
       "Tailwind CSS",
       "Supabase",
+      "PostgreSQL",
+      "Cron Jobs",
     ],
     githubUrl:
       "https://github.com/stephengilbert1/Transformer-Dashboard-Fullstack",
     demoUrl: "https://transformer-dashboard-fullstack.vercel.app/",
+    image1: {
+      src: "/images/transformer-dashboard-table.png",
+      caption:
+        "Table view showing the all monitored transformers with the current temperature and overheating status",
+    },
+    image2: {
+      src: "/images/transformer-dashboard-chart.png",
+      caption:
+        "Chart view showing the selected transformer top oil temperature over the chosen period",
+    },
     category: "Transformers",
   },
   {
