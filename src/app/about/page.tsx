@@ -24,9 +24,9 @@ export default function AboutPage() {
         coding skills I picked up during my engineering degree and build
         tangible projects that solve real world problems. In the Projects page
         you&apos;ll find tools and products that could be applied in the
-        electrical utility industry that I work in. Beyond this you'll find some
-        fun tech tools for the recreational activities I love such as skiing and
-        mountain biking.
+        electrical utility industry that I work in. Beyond this you&apos;ll find
+        some fun tech tools for the recreational activities I love such as
+        skiing and mountain biking.
       </p>
       <div className="mt-10 space-y-8">
         <div>
