@@ -63,28 +63,39 @@ export const projects: Project[] = [
     title: "Transformer Oil Expansion Calculator",
     slug: "transformer_tool_tailwind",
     description:
-      "Estimates oil rise due to temperature in distribution transformers. Used by field techs and planners.",
-    why: "This tool helps designers, refurbishers, and field techs visualize how oil levels change from ambient to high operating temperatures—ensuring proper clearances around critical components.",
+      "Estimates oil rise due to thermal expansion in distribution transformers. Used by transformer designers, transformer refurbishers and component manufacturers.",
+    why: "The current method for determining the oil rise for a transformer design is to either use an excel document with formula or a table that is less accurate due to the lack of granularity. This tool, being web based, convieniently helps designers, refurbishers, and field techs visualize how oil levels change from ambient to high operating temperatures—ensuring proper clearances around critical components.",
     features: [
       "Supports round (pole-top) and rectangular (pad-mount) tanks geometries",
       "Metric and imperial unit options",
       "Visual display of oil levels at ambient and elevated temperatures",
+      "Web based - convienient to use even on mobile or tablet such as in the manufacturing plant",
     ],
     tags: ["Frontend", "Next.js", "React", "Tailwind CSS"],
     githubUrl: "https://github.com/stephengilbert1/transformer_tool_tailwind",
     demoUrl: "https://transformer-tool-tailwind.vercel.app/",
+    image1: {
+      src: "/images/transformer-oil-rise-form.png",
+      caption: "Form to enter geometric inputs for a given transformer design.",
+    },
+    image2: {
+      src: "/images/transformer-oil-rise-results.png",
+      caption:
+        "Results showing the oil expansion and rise as well as a visualisation of the oil levels at ambient and hot temperatures relative to the size of the transformer.",
+    },
     category: "Transformers",
   },
   {
     title: "Yard Inspection Report",
     slug: "yard-inspection-report",
     description:
-      "Records transformer inspections in batches and stores data in a table.",
-    why: "This tool helps engineers collect meaningful data when in the field",
+      "This Yard Inspection Report tool allows engineers in the field to records transformer inspections in batches and store the data in a table stored on Neon.",
+    why: "The current method for collecting data during utility yard inspections is with pen and paper and then entering the data manually once back at the office. When inspecting a large yard there are often large quantities of transformers with common attributes. This tool helps engineers efficiently collect meaningful data when in the field.",
     features: [
       "Batch entry form for transformers with shared attributes",
       "GraphQL API connected to a PostgreSQL database",
       "Deployed to Vercel with Prisma schema synced to Neon DB",
+      "Export to CSV",
     ],
     tags: [
       "Fullstack",
@@ -97,6 +108,16 @@ export const projects: Project[] = [
     ],
     githubUrl: "https://github.com/stephengilbert1/yard-inspection-report",
     demoUrl: "https://yard-inspection-report.vercel.app/",
+    image1: {
+      src: "/images/yard-inspection-report-form.png",
+      caption:
+        "Form to batch enter transformers with common attributes during a utility yard inspection. Entries are submitted to a Neon database.",
+    },
+    image2: {
+      src: "/images/yard-inspection-report-table.png",
+      caption:
+        "Table view showing all the transformers added during a given yard inspection. Export to CSV option allows the backend to be disconnected and keep all data client side to simplify the security of managing customer data.",
+    },
     category: "Data Collection",
   },
   {
