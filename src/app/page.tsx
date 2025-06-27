@@ -5,7 +5,7 @@ export default function Home() {
   const featured = projects.slice(0, 3);
 
   return (
-    <main className="max-w-3xl mx-auto px-6 py-20 text-center">
+    <main className="max-w-screen-xl mx-auto px-6 py-20 text-center">
       <section className="relative isolate overflow-hidden py-20 px-6 text-center">
         {/* Background SVG */}
         <div className="absolute inset-0 -z-10 bg-white">
@@ -31,7 +31,7 @@ export default function Home() {
 
         <h1 className="text-5xl font-bold text-slate-900">Stephen Gilbert</h1>
         <p className="mt-4 text-lg text-slate-600">
-          Building applications to solve real-world problems.
+          Building web applications and tools to solve real-world problems.
         </p>
         <div className="mt-6 flex justify-center gap-4">
           <Link

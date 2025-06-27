@@ -16,13 +16,27 @@ export default async function ProjectPage({
   }
 
   return (
-    <main className="max-w-3xl mx-auto px-6 py-16">
+    <main className="max-w-4xl mx-auto px-6 py-16">
       <section className="mb-10">
-        <h1 className="text-4xl font-bold text-slate-900">{project.title}</h1>
-        <p className="text-slate-600 italic mt-2">{project.tags.join(" · ")}</p>
+        <h1 className="text-4xl font-bold text-slate-900 mb-4">
+          {project.title}
+        </h1>
+        <section className="mb-4">
+          <div className="flex flex-wrap gap-2">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="bg-slate-100 text-slate-700 text-sm px-2 py-1 rounded"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </section>
+
         <p className="text-lg text-slate-700 mb-6">{project.description}</p>
         {project.image1 && (
-          <div className="mt-10">
+          <div className="mt-4">
             <img
               src={project.image1.src}
               alt="Screenshot 1"
@@ -64,22 +78,6 @@ export default async function ProjectPage({
               <li key={i}>{f}</li>
             ))}
           </ul>
-        </div>
-      </section>
-
-      <section className="mb-10">
-        <h2 className="text-2xl font-semibold text-slate-800 mb-2">
-          Tech Stack
-        </h2>
-        <div className="flex flex-wrap gap-2">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="bg-slate-100 text-slate-700 text-sm px-2 py-1 rounded"
-            >
-              {tag}
-            </span>
-          ))}
         </div>
       </section>
 

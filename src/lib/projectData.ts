@@ -29,10 +29,10 @@ export const projects: Project[] = [
     why: "This tool is aimed at the electrical utility industry which I am currently working on developing temperature sensors for. The dashboard allows utilities and asset managers to use temperature sensor data to monitor transformers and proactively size up an overloaded transformer before it leads to an outage.",
     features: [
       "Real-time temperature updates via a scheduled cron job.",
-      "Filter, search, and sort transformer by Serial Number or attribute",
-      "Store key transformer metadata",
-      "Visualise real-time temperature history",
-      "Interactive chart with selectable time ranges (1d, 1w, 1m)",
+      "Filter, search, and sort transformer by Serial Number or attribute.",
+      "Store key transformer metadata.",
+      "Visualise real-time temperature history.",
+      "Interactive chart with selectable time ranges (1d, 1w, 1m).",
     ],
     tags: [
       "Fullstack",
@@ -60,16 +60,16 @@ export const projects: Project[] = [
     category: "Transformers",
   },
   {
-    title: "Transformer Oil Expansion Calculator",
+    title: "Transformer Oil Expansion",
     slug: "transformer_tool_tailwind",
     description:
       "Estimates oil rise due to thermal expansion in distribution transformers. Used by transformer designers, transformer refurbishers and component manufacturers.",
     why: "The current method for determining the oil rise for a transformer design is to either use an excel document with formula or a table that is less accurate due to the lack of granularity. This tool, being web based, convieniently helps designers, refurbishers, and field techs visualize how oil levels change from ambient to high operating temperatures—ensuring proper clearances around critical components.",
     features: [
-      "Supports round (pole-top) and rectangular (pad-mount) tanks geometries",
+      "Supports round (pole-top) and rectangular (pad-mount) tanks geometries.",
       "Metric and imperial unit options",
-      "Visual display of oil levels at ambient and elevated temperatures",
-      "Web based - convienient to use even on mobile or tablet such as in the manufacturing plant",
+      "Visual display of oil levels at ambient and elevated temperatures.",
+      "Web based - convienient to use even on mobile or tablet such as in the manufacturing plant.",
     ],
     tags: ["Frontend", "Next.js", "React", "Tailwind CSS"],
     githubUrl: "https://github.com/stephengilbert1/transformer_tool_tailwind",
