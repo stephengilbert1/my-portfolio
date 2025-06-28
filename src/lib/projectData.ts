@@ -16,6 +16,7 @@ export type Project = {
     src: string;
     caption: string;
   };
+  imageThumb?: string;
   category: string;
   longDescription?: string; // optional
 };
@@ -57,6 +58,7 @@ export const projects: Project[] = [
       caption:
         "Chart view showing the selected transformer top oil temperature over the chosen period.",
     },
+    imageThumb: "/images/Transformer-dashboard-32.png",
     category: "Transformers",
   },
   {
@@ -83,6 +85,7 @@ export const projects: Project[] = [
       caption:
         "Results showing the oil expansion and rise as well as a visualisation of the oil levels at ambient and hot temperatures relative to the size of the transformer.",
     },
+    imageThumb: "/images/oilrise-32.png",
     category: "Transformers",
   },
   {
@@ -118,6 +121,7 @@ export const projects: Project[] = [
       caption:
         "Table view showing all the transformers added during a given yard inspection. Export to CSV option allows the backend to be disconnected and keep all data client side to simplify the security of managing customer data.",
     },
+    imageThumb: "/images/yard-inspection-32.png",
     category: "Data Collection",
   },
   {

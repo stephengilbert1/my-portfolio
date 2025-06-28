@@ -61,11 +61,17 @@ export default function Home() {
               className="rounded-2xl border border-slate-200 p-6 shadow-sm bg-white"
             >
               <Link href={`/projects/${project.slug}`}>
-                <h3 className="text-xl font-semibold text-slate-800 hover:underline">
+                <h3 className="text-xl font-semibold text-slate-800 hover:underline min-h-[3.5rem]">
                   {project.title}
                 </h3>
               </Link>
-
+              {project.imageThumb && (
+                <img
+                  src={project.imageThumb}
+                  alt={`${project.title} screenshot`}
+                  className="w-full rounded-md mb-4 border"
+                />
+              )}
               <p className="mt-2 text-sm text-slate-600">
                 {project.description}
               </p>
