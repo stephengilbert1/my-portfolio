@@ -50,39 +50,26 @@ export default function Home() {
         <h2 className="text-3xl font-bold mb-10 text-slate-800">
           Featured Projects
         </h2>
+
         <div className="grid gap-8 sm:grid-cols-3">
           {featured.map((project) => (
-            <div
-              key={project.title}
-              className="rounded-2xl border border-slate-200 p-6 shadow-sm bg-white"
-            >
+            <div key={project.title}>
               <Link href={`/projects/${project.slug}`}>
-                <h3 className="text-xl font-semibold text-slate-800 hover:underline min-h-[3.5rem]">
-                  {project.title}
-                </h3>
+                <div className="relative w-full h-64 rounded-xl overflow-hidden">
+                  {project.imageThumb && (
+                    <img
+                      src={project.imageThumb}
+                      alt={`${project.title} screenshot`}
+                      className="w-full h-full object-contain"
+                    />
+                  )}
+                  <div className="absolute inset-0  bg-[rgba(0,0,0,0.4)] flex items-end justify-left">
+                    <h3 className="text-white text-xl font-semibold text-center px-4">
+                      {project.title}
+                    </h3>
+                  </div>
+                </div>
               </Link>
-              {project.imageThumb && (
-                <img
-                  src={project.imageThumb}
-                  alt={`${project.title} screenshot`}
-                  className="w-full rounded-md mb-4 border"
-                />
-              )}
-              <p className="mt-2 text-sm text-slate-600">
-                {project.description}
-              </p>
-
-              <div className="mt-4 flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="bg-slate-100 text-slate-700 text-xs px-2 py-1 rounded"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
               <div className="mt-4 flex gap-4 text-sm">
                 <Link
                   href={project.githubUrl}
@@ -100,6 +87,20 @@ export default function Home() {
                     Live Demo
                   </Link>
                 )}
+              </div>
+              <p className="mt-2 text-sm text-slate-600 text-left">
+                {project.description}
+              </p>
+
+              <div className="mt-4 flex flex-wrap gap-2">
+                {project.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="bg-slate-100 text-slate-700 text-xs px-2 py-1 rounded"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             </div>
           ))}

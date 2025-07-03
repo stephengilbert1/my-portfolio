@@ -23,7 +23,7 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: "Transformer Temperature Dashboard",
+    title: "Transformer Dashboard",
     slug: "transformer-dashboard",
     description:
       "This dashboard monitors top oil temperatures in distribution transformers in real-time using a live Supabase backend. Helps visualize transformer performance and identify overheating risks.",
