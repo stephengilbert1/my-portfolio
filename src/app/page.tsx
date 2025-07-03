@@ -1,40 +1,25 @@
 import { projects } from "@/lib/projectData";
 import Link from "next/link";
+import RidgelineBackground from "@/components/RidgelineBackground";
 
 export default function Home() {
   const featured = projects.slice(0, 3);
 
   return (
-    <main className="max-w-screen-xl mx-auto px-6 py-20 text-center">
-      <section className="relative isolate overflow-hidden py-20 px-6 text-center">
-        {/* Background SVG */}
-        <div className="absolute inset-0 -z-10 bg-white">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <pattern
-                id="grid"
-                width="40"
-                height="40"
-                patternUnits="userSpaceOnUse"
-              >
-                <path
-                  d="M 40 0 L 0 0 0 40"
-                  fill="none"
-                  stroke="#e2e8f0"
-                  strokeWidth="1"
-                />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid)" />
-          </svg>
+    <main className="relative overflow-hidden">
+      <div className="relative w-full h-[400px]">
+        <RidgelineBackground />
+        <div className="absolute left-0 right-0 bottom-[10%] translate-y-[-30%] flex justify-center">
+          <h1
+            className="text-white text-[clamp(2rem,10vw,5rem)] font-belwe leading-none"
+            style={{ fontFamily: "Belwe-Bold" }}
+          >
+            Stephen Gilbert
+          </h1>
         </div>
-        <h1
-          className="text-5xl font-bold text-patagonia-black"
-          style={{ fontFamily: "Belwe-Bold" }}
-        >
-          Stephen Gilbert
-        </h1>
+      </div>
 
+      <section className="relative z-10 flex flex-col items-center justify-center py-8 text-black text-center">
         <p className="mt-4 text-lg text-slate-600">
           Building web applications and tools to solve real-world problems.
         </p>
@@ -53,10 +38,9 @@ export default function Home() {
           </a>
         </div>
       </section>
-
       {/* Featured Projects Section */}
-      <section>
-        <h2 className="text-2xl font-bold mb-6 text-slate-800">
+      <section className="max-w-screen-xl mx-auto px-6 py-2 text-center">
+        <h2 className="text-3xl font-bold mb-10 text-slate-800">
           Featured Projects
         </h2>
         <div className="grid gap-8 sm:grid-cols-3">
