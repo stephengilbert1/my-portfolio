@@ -43,7 +43,7 @@ export default function AboutPage() {
 
         <div>
           <img
-            src="/images/running.jpg"
+            src="/images/running.JPG"
             alt="Stephen running"
             className="w-full rounded-xl border shadow-sm"
           />
@@ -54,7 +54,7 @@ export default function AboutPage() {
 
         <div>
           <img
-            src="/images/surfing2.jpg"
+            src="/images/surfing2.JPG"
             alt="Stephen surfing"
             className="w-full rounded-xl border shadow-sm"
           />
