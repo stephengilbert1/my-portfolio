@@ -14,9 +14,9 @@ export default function AboutPage() {
         working on new product development and automated manufacturing
         equipment. Across these roles I have developed a love for solving
         technical problems. My favourite thing about being an engineer is that
-        our jobs constantly require us to learn new things. This curiosity has
-        is currently hyper-focused on developing practical and highly applied
-        web applications.
+        our jobs constantly require us to learn new things. This curiosity is
+        currently hyper-focused on developing practical and highly applied web
+        applications.
       </p>
 
       <p className="text-slate-700 text-lg">

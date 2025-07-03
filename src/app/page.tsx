@@ -11,7 +11,7 @@ export default function Home() {
         <RidgelineBackground />
         <div className="absolute left-0 right-0 bottom-[5%] translate-y-[-30%] flex justify-center">
           <h1
-            className="text-white text-[clamp(2rem,15vw,6rem)] font-belwe leading-none"
+            className="text-white text-[clamp(2rem,15vw,5rem)] font-belwe leading-none"
             style={{ fontFamily: "Belwe-Bold" }}
           >
             Stephen Gilbert
