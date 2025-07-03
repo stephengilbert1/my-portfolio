@@ -7,8 +7,15 @@ export default function Home() {
 
   return (
     <main className="relative overflow-hidden">
-      <div className="relative w-full h-[350px]">
-        <RidgelineBackground />
+      <div className="relative group w-full h-[350px] overflow-hidden">
+        <img
+          src="/images/Mountains.jpg"
+          alt="Ridgeline background"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+
+        <RidgelineBackground className="absolute inset-0 w-full h-full transition-opacity duration-1750 group-hover:opacity-0" />
+
         <div className="absolute left-0 right-0 bottom-[5%] translate-y-[-30%] flex justify-center">
           <h1
             className="text-white text-[clamp(2rem,15vw,5rem)] font-belwe leading-none"
