@@ -28,21 +28,26 @@ export default function Home() {
             <rect width="100%" height="100%" fill="url(#grid)" />
           </svg>
         </div>
+        <h1
+          className="text-5xl font-bold text-patagonia-black"
+          style={{ fontFamily: "Belwe-Bold" }}
+        >
+          Stephen Gilbert
+        </h1>
 
-        <h1 className="text-5xl font-bold text-slate-900">Stephen Gilbert</h1>
         <p className="mt-4 text-lg text-slate-600">
           Building web applications and tools to solve real-world problems.
         </p>
         <div className="mt-6 flex justify-center gap-4">
           <Link
             href="/projects"
-            className="px-5 py-2 text-white bg-slate-900 rounded-lg hover:bg-slate-700 transition"
+            className="px-5 py-2 text-white bg-patagonia-black rounded-lg hover:bg-patagonia-purple transition"
           >
             View Projects
           </Link>
           <a
             href="mailto:stephengilbert1@gmail.com"
-            className="px-5 py-2 border border-slate-900 rounded-lg hover:bg-slate-100 transition"
+            className="px-5 py-2 border border-slate-900 rounded-lg bg-patagonia-white rounded-lg hover:bg-patagonia-blue transition"
           >
             Contact
           </a>

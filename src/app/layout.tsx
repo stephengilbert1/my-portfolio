@@ -2,11 +2,17 @@
 import Link from "next/link";
 import "./globals.css";
 import { Github, Linkedin, Mail } from "lucide-react";
+import { Outfit } from "next/font/google";
 
 export const metadata = {
   title: "Stephen Gilbert Portfolio",
   description: "The pivot into Software Engineering",
 };
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+});
 
 export default function RootLayout({
   children,
@@ -15,9 +21,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="flex flex-col min-h-screen">
+      <body
+        className={`${outfit.variable} font-sans flex flex-col min-h-screen`}
+      >
         <nav className="flex justify-between items-center px-6 py-4 bg-white border-b shadow-sm">
-          <div className="font-bold text-xl">Stephen Gilbert</div>
+          <div
+            className="font-bold text-xl"
+            style={{ fontFamily: "Belwe-Bold" }}
+          >
+            Stephen Gilbert
+          </div>
           <div className="space-x-4">
             <Link href="/" className="hover:underline">
               Home

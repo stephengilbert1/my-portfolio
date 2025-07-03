@@ -3,13 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-outfit);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,8 +13,25 @@
   }
 }
 
+@font-face {
+  font-family: "Belwe-Bold";
+  src: url("/fonts/Belwe/BelweBT-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-patagonia-orange: #f26d21;
+  --color-patagonia-pink: #d92545;
+  --color-patagonia-blue: #080aef;
+  --color-patagonia-purple: #8a07bd;
+  --color-patagonia-black: #000000;
+  --color-patagonia-background: #f8f8f8;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-outfit), sans-serif;
 }
