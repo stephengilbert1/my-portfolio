@@ -4,11 +4,6 @@ import "./globals.css";
 import { Github, Linkedin, Mail } from "lucide-react";
 import { Outfit } from "next/font/google";
 
-export const metadata = {
-  title: "Stephen Gilbert Portfolio",
-  description: "The pivot into Software Engineering",
-};
-
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
