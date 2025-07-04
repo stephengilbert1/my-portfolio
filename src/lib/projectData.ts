@@ -58,7 +58,7 @@ export const projects: Project[] = [
       caption:
         "Chart view showing the selected transformer top oil temperature over the chosen period.",
     },
-    imageThumb: "/images/Transformer-dashboard-32.png",
+    imageThumb: "/images/Transformer-dashboard-thumb.png",
     category: "Transformers",
   },
   {
@@ -85,7 +85,7 @@ export const projects: Project[] = [
       caption:
         "Results showing the oil expansion and rise as well as a visualisation of the oil levels at ambient and hot temperatures relative to the size of the transformer.",
     },
-    imageThumb: "/images/oilrise-32.png",
+    imageThumb: "/images/oil-rise-thumb.png",
     category: "Transformers",
   },
   {
