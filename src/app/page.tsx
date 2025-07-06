@@ -55,19 +55,14 @@ export default function Home() {
           {featured.map((project) => (
             <div key={project.title}>
               <Link href={`/projects/${project.slug}`}>
-                <div className="relative w-full h-64 rounded-xl overflow-hidden">
+                <div className="relative w-full aspect-video rounded-xl overflow-hidden ">
                   {project.imageThumb && (
                     <img
                       src={project.imageThumb}
                       alt={`${project.title} screenshot`}
-                      className="w-full h-full object-contain"
+                      className="w-full h-full object-cover"
                     />
                   )}
-                  <div className="absolute inset-0  bg-[rgba(0,0,0,0.4)] flex items-end justify-left">
-                    <h3 className="text-white text-xl font-semibold text-center px-4">
-                      {project.title}
-                    </h3>
-                  </div>
                 </div>
               </Link>
               <div className="mt-4 flex gap-4 text-sm">
