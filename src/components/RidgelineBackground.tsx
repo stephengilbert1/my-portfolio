@@ -1,11 +1,13 @@
-export default function RidgelineBackground({
-  className,
-}: {
+type Props = {
   className?: string;
-}) {
+  style?: React.CSSProperties;
+};
+
+export default function RidgelineBackground({ className, style }: Props) {
   return (
     <svg
       className={className}
+      style={style}
       viewBox="0 0 1440 350"
       preserveAspectRatio="xMidYMid slice"
       xmlns="http://www.w3.org/2000/svg"

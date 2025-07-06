@@ -1,20 +1,44 @@
+"use client";
+
 import { projects } from "@/lib/projectData";
 import Link from "next/link";
 import RidgelineBackground from "@/components/RidgelineBackground";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const featured = projects.slice(0, 3);
+  const [opacity, setOpacity] = useState(1);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const maxScroll = 100;
+      const newOpacity = Math.max(1 - scrollY / maxScroll, 0);
+      setOpacity(newOpacity);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <main className="relative overflow-hidden">
-      <div className="relative group w-full h-[350px] overflow-hidden">
+      <div
+        className="relative group w-full h-[350px] overflow-hidden"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         <img
           src="/images/Mountains.jpg"
           alt="Ridgeline background"
           className="absolute inset-0 w-full h-full object-cover"
         />
 
-        <RidgelineBackground className="absolute inset-0 w-full h-full transition-opacity duration-1750 group-hover:opacity-0" />
+        <RidgelineBackground
+          className="absolute inset-0 w-full h-full transition-opacity duration-1750"
+          style={{ opacity: isHovered ? 0 : opacity }}
+        />
 
         <div className="absolute left-0 right-0 bottom-[5%] translate-y-[-30%] flex justify-center">
           <h1
