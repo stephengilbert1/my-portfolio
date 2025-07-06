@@ -2,7 +2,7 @@
 
 :root {
   color-scheme: light;
-  --background: #ffffff;
+  --background: #efefef;
   --foreground: #171717;
   --font-sans: var(--font-outfit);
 }
@@ -33,6 +33,6 @@
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: #2a2a2a;
   font-family: var(--font-outfit), sans-serif;
 }
