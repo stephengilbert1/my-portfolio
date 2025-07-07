@@ -22,6 +22,28 @@ export default async function ProjectPage({
           {project.title}
         </h1>
         <section className="mb-4">
+          <section className="flex gap-4 mt-6 py-2">
+            {project.demoUrl && (
+              <a
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition"
+              >
+                Live Demo
+              </a>
+            )}
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border border-slate-400 text-slate-700 px-4 py-2 rounded hover:bg-slate-100 transition"
+              >
+                View Code
+              </a>
+            )}
+          </section>
           <div className="flex flex-wrap gap-2">
             {project.tags.map((tag) => (
               <span
@@ -79,29 +101,6 @@ export default async function ProjectPage({
             ))}
           </ul>
         </div>
-      </section>
-
-      <section className="flex gap-4 mt-6">
-        {project.demoUrl && (
-          <a
-            href={project.demoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition"
-          >
-            Live Demo
-          </a>
-        )}
-        {project.githubUrl && (
-          <a
-            href={project.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="border border-slate-400 text-slate-700 px-4 py-2 rounded hover:bg-slate-100 transition"
-          >
-            View Code
-          </a>
-        )}
       </section>
     </main>
   );
