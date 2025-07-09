@@ -125,7 +125,7 @@ export const projects: Project[] = [
     category: "Data Collection",
   },
   {
-    title: "Sensor Coniguration Guide",
+    title: "Sensor Configuration Guide",
     slug: "sensor-config-flow",
     description:
       "Helps transformer manufacturers determine the correct sensor configuration based on their production process.",
