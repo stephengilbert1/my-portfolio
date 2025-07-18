@@ -29,11 +29,10 @@ export const projects: Project[] = [
       "This dashboard monitors top oil temperatures in distribution transformers in real-time using a live Supabase backend. Helps visualize transformer performance and identify overheating risks.",
     why: "This tool is aimed at the electrical utility industry which I am currently developing temperature sensors for. The dashboard allows utilities and asset managers to use temperature sensor data to monitor transformers and proactively size up an overloaded transformer before it leads to an outage.",
     features: [
-      "Real-time temperature updates via a scheduled cron job.",
+      "Real-time temperature monitoring with scheduled updates via cron job.",
+      "Visual temperature dials and interactive chart with selectable time ranges (1d, 1w, 1m).",
       "Filter, search, and sort transformer by Serial Number or attribute.",
-      "Store key transformer metadata.",
-      "Visualise real-time temperature history.",
-      "Interactive chart with selectable time ranges (1d, 1w, 1m).",
+      "Transformer inspection form to record and store transformer condition data.",
     ],
     tags: [
       "Fullstack",
@@ -49,14 +48,14 @@ export const projects: Project[] = [
       "https://github.com/stephengilbert1/Transformer-Dashboard-Fullstack",
     demoUrl: "https://transformer-dashboard-fullstack.vercel.app/",
     image1: {
-      src: "/images/transformer-dashboard-table.png",
+      src: "/images/transformer-dashboard-table-inspections.png",
       caption:
-        "Table view showing all monitored transformers with the current temperature and overheating status.",
+        "Table view showing all monitored transformers with the current temperature and overheating status. Maintenence teams can log inspections to a database directly from the dashboard.",
     },
     image2: {
-      src: "/images/transformer-dashboard-chart.png",
+      src: "/images/transformer-detail-panel.png",
       caption:
-        "Chart view showing the selected transformer top oil temperature over the chosen period.",
+        "Summary dials and chart view showing the selected transformer top oil temperature over the chosen period.",
     },
     imageThumb: "/images/transformer-dashboard-symbol.png",
     category: "Transformers",
