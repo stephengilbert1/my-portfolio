@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col min-h-screen">
-      <nav className="flex justify-between items-center px-6 py-4 bg-white border-b shadow-sm">
+      <nav className="sticky top-0 z-50 flex justify-between items-center px-6 py-4 bg-white border-b shadow-sm">
         <div className="font-bold text-xl">[YourName]</div>
         <div className="space-x-4">
           <Link href="/" className="hover:underline">

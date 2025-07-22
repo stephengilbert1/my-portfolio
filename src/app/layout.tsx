@@ -19,7 +19,7 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} font-sans flex flex-col min-h-screen`}
       >
-        <nav className="flex justify-between items-center px-6 py-4 bg-black text-white shadow-sm">
+        <nav className="sticky top-0 z-50 flex justify-between items-center px-6 py-4 bg-black text-white shadow-sm">
           <div
             className="font-bold text-xl"
             style={{ fontFamily: "Belwe-Bold" }}
