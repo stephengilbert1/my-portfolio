@@ -35,13 +35,13 @@ export const projects: Project[] = [
       "Transformer inspection form to record and store transformer condition data.",
     ],
     tags: [
-      "Fullstack",
-      "Next.js",
       "React",
       "TypeScript",
+      "Next.js (App Router)",
       "Tailwind CSS",
-      "Supabase",
       "PostgreSQL",
+      "Supabase",
+      "Full-Stack",
       "Cron Jobs",
     ],
     githubUrl:
