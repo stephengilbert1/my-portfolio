@@ -72,9 +72,9 @@ export const projects: Project[] = [
       "Visual display of oil levels at ambient and elevated temperatures.",
       "Web based - convienient to use even on mobile or tablet such as in the manufacturing plant.",
     ],
-    tags: ["Frontend", "Next.js", "React", "Tailwind CSS"],
+    tags: ["React", "TypeScript", "Next.js (App Router)", "Tailwind CSS"],
     githubUrl: "https://github.com/stephengilbert1/transformer_tool_tailwind",
-    demoUrl: "https://transformer-tool-tailwind.vercel.app/",
+    demoUrl: "https://oil-rise-tool.vercel.app/",
     image1: {
       src: "/images/transformer-oil-rise-form.png",
       caption: "Form to enter geometric inputs for a given transformer design.",
@@ -100,9 +100,9 @@ export const projects: Project[] = [
       "Export to CSV",
     ],
     tags: [
-      "Fullstack",
-      "Next.js",
       "React",
+      "Typescript",
+      "Next.js",
       "Tailwind CSS",
       "GraphQL",
       "PostgreSQL",
