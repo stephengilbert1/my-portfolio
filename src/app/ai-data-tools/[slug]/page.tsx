@@ -1,7 +1,8 @@
-// src/app/projects/[slug]/page.tsx
+// src/app/ai-data-tools/[slug]/page.tsx
 
 import { notFound } from "next/navigation";
-import { projects } from "@/lib/projectData";
+import { dataTools } from "@/lib/dataToolData";
+import IframeAuto from "@/components/IframeAuto";
 
 export default async function ProjectPage({
   params,
@@ -10,8 +11,7 @@ export default async function ProjectPage({
 }) {
   const { slug } = await params;
 
-  const project = projects.find((p) => p.slug === slug);
-
+  const project = dataTools.find((p) => p.slug === slug);
   if (!project) {
     notFound();
   }
@@ -58,6 +58,30 @@ export default async function ProjectPage({
         </section>
 
         <p className="text-lg text-slate-700 mb-6">{project.description}</p>
+
+        {project.analysisUrl && (
+          <section className="mt-10">
+            <h2 className="sr-only">Interactive Analysis</h2>
+            <div className="rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+              <IframeAuto
+                src={project.analysisUrl}
+                title={`${project.title} demo`}
+                className="w-full" // no fixed height here
+              />
+            </div>
+            <p className="text-center text-slate-500 mt-3">
+              <a
+                href={project.analysisUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-slate-700"
+              >
+                Open full screen
+              </a>
+            </p>
+          </section>
+        )}
+
         {project.image1 && (
           <div className="mt-4">
             <img

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <meta charset="utf-8" />
+    <title>Transformer Temperature History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root {
+        --fg: #171717;
+        --muted: #666;
+        --border: #e2e2e2;
+        --bg: #fff;
+        --chart-h: 570px;
+        /* ⬇️ new */
+        --page-w: 1400px; /* was 1200px */
+        --legend-w: 320px; /* was 260px */
+      }
+      .wrap {
+        max-width: var(--page-w);
+        margin: 0 auto;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: 1fr var(--legend-w);
+        gap: 18px;
+        align-items: start;
+      }
+
+      @media (max-width: 900px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      h2 {
+        margin: 0 0 10px 0;
+        font-weight: 600;
+      }
+
+      body {
+        font-family: Outfit, Arial, Helvetica, sans-serif;
+      }
+
+      .chartwrap {
+        position: relative;
+        height: var(--chart-h);
+        background: #fff;
+        border-radius: 14px;
+      }
+      #chart {
+        width: 100% !important;
+        height: 100% !important;
+        display: block;
+      }
+
+      /* date window chips UNDER the x-axis */
+      .chips {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        align-items: center;
+        margin: 14px 0 0;
+        flex-wrap: wrap;
+      }
+      .chip {
+        padding: 6px 12px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: #fff;
+        cursor: pointer;
+        font-size: 13px;
+      }
+      .chip.active {
+        background: #1059ab;
+        color: #fff;
+        border-color: #1059ab;
+      }
+
+      /* right-side legend column */
+      .legendcol {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .legendcol h3 {
+        margin: 0;
+        font-size: 14px;
+        color: var(--muted);
+        font-weight: 600;
+      }
+      #legend {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-height: 46px;
+        max-height: calc(var(--chart-h) - 24px);
+        overflow: auto;
+        padding-right: 2px;
+      }
+      .pill {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 10px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: #fff;
+        cursor: pointer;
+        font-size: 13px;
+      }
+      .pill:not(.active) {
+        opacity: 0.55;
+      }
+      .swatch {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--c);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .status {
+        margin-top: 8px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .toolbar {
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      h2 {
+        margin: 0 0 10px 0;
+        font-weight: 600;
+        text-align: center;
+      }
+      .rightControls {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="layout">
+        <!-- LEFT: title + chart + window chips + status -->
+        <div class="chartcol">
+          <div class="toolbar"><h2>Transformer Temperature History</h2></div>
+
+          <div class="chartwrap"><canvas id="chart"></canvas></div>
+
+          <div class="chips" id="windows">
+            <button class="chip" data-window="24h">24h</button>
+            <button class="chip" data-window="7d">7 days</button>
+            <button class="chip active" data-window="30d">30 days</button>
+          </div>
+
+          <div class="status" id="status"></div>
+        </div>
+
+        <!-- RIGHT: legend pills stacked vertically (+ threshold toggle) -->
+        <aside class="legendcol">
+          <div class="rightControls">
+            <h3>Transformers</h3>
+            <button class="chip" id="thrToggle">Threshold</button>
+          </div>
+          <div id="legend"></div>
+        </aside>
+      </div>
+    </div>
+
+    <!-- libs -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3"></script>
+    <script>
+      (async function () {
+        const status = document.getElementById("status");
+        const setStatus = (m) => {
+          status.textContent = m;
+          console.log(m);
+        };
+
+        // fetch data
+        const res = await fetch(`./series.json?ts=${Date.now()}`);
+        if (!res.ok) {
+          setStatus(`Failed to load series.json (HTTP ${res.status})`);
+          return;
+        }
+        const raw = await res.json();
+        const ids = Object.keys(raw).sort();
+        if (!ids.length) {
+          setStatus("No transformers");
+          return;
+        }
+
+        const allTimes = Object.values(raw)
+          .flatMap((s) => s?.t ?? [])
+          .map((ts) => new Date(ts).getTime())
+          .filter(Number.isFinite);
+        const last = allTimes.length ? new Date(Math.max(...allTimes)) : null;
+        document.getElementById("status").textContent = last
+          ? `Last updated: ${last.toISOString().slice(0, 10)}`
+          : "Last updated: n/a";
+
+        // build datasets; only "0001" (or first) visible initially
+        const colors = [
+          "#1059ab",
+          "#f26d21",
+          "#7c3aed",
+          "#059669",
+          "#e11d48",
+          "#0ea5e9",
+          "#f59e0b",
+          "#10b981",
+          "#ef4444",
+          "#8b5cf6",
+          "#22c55e",
+          "#fb923c",
+          "#3b82f6",
+          "#14b8a6",
+          "#f43f5e",
+        ];
+        const initialVisible = ids.includes("0001") ? "0001" : ids[0];
+
+        const datasets = ids.map((id, i) => {
+          const s = raw[id] || { t: [], y: [] };
+          const data = (s.t || [])
+            .map((ts, k) => ({ x: new Date(ts), y: Number(s.y?.[k]) }))
+            .filter(
+              (p) => Number.isFinite(p.y) && !Number.isNaN(p.x.getTime())
+            );
+          return {
+            label: id,
+            data,
+            borderColor: colors[i % colors.length],
+            backgroundColor: colors[i % colors.length],
+            borderWidth: 2.25,
+            tension: 0.25,
+            pointRadius: 0,
+            fill: false,
+            hidden: id !== initialVisible,
+          };
+        });
+
+        // register plugins
+        const annotationPlugin = window["chartjs-plugin-annotation"];
+        Chart.register(annotationPlugin);
+        Chart.register(Chart.Decimation);
+
+        // html legend plugin -> vertical pills on the right
+        const htmlLegend = {
+          id: "htmlLegend",
+          afterUpdate(chart, args, opts) {
+            const container = document.getElementById(opts.containerID);
+            container.innerHTML = "";
+            chart.data.datasets.forEach((ds, idx) => {
+              const pill = document.createElement("button");
+              pill.className = "pill" + (ds.hidden ? "" : " active");
+              pill.style.setProperty("--c", ds.borderColor);
+              pill.innerHTML = `<span class="swatch" style="--c:${ds.borderColor}"></span>${ds.label}`;
+              pill.onclick = () => {
+                ds.hidden = !ds.hidden;
+                pill.classList.toggle("active", !ds.hidden);
+                fitYToVisible(chart);
+                chart.update();
+              };
+              container.appendChild(pill);
+            });
+          },
+        };
+        Chart.register(htmlLegend);
+
+        // chart
+        const ctx = document.getElementById("chart").getContext("2d");
+        const chart = new Chart(ctx, {
+          type: "line",
+          data: { datasets },
+          options: {
+            parsing: false,
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: false,
+            spanGaps: true,
+            scales: {
+              x: {
+                type: "time",
+                time: {
+                  unit: "day",
+                  displayFormats: { day: "MMM d", hour: "HH:mm" },
+                  tooltipFormat: "MMM d",
+                },
+                ticks: { maxTicksLimit: 6, autoSkip: true, maxRotation: 0 },
+                grid: { color: "rgba(0,0,0,0.06)" },
+              },
+              y: {
+                title: { display: true, text: "°C" },
+                ticks: { maxTicksLimit: 6 },
+                grid: { color: "rgba(0,0,0,0.06)" },
+              },
+            },
+            plugins: {
+              legend: { display: false },
+              htmlLegend: { containerID: "legend" },
+              decimation: { enabled: true, algorithm: "lttb", samples: 3000 },
+              annotation: {
+                annotations: {
+                  threshold: {
+                    display: false,
+                    type: "line",
+                    yMin: 100,
+                    yMax: 100,
+                    borderColor: "#e11d48",
+                    borderDash: [6, 6],
+                    borderWidth: 2,
+                    label: {
+                      display: true,
+                      content: "Threshold 100°C",
+                      position: "end",
+                      backgroundColor: "rgba(255,255,255,0.9)",
+                      color: "#171717",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        });
+
+        // window chips under x-axis
+        const windows = document.getElementById("windows");
+        windows.addEventListener("click", (e) => {
+          const btn = e.target.closest(".chip");
+          if (!btn) return;
+          for (const b of windows.querySelectorAll(".chip"))
+            b.classList.remove("active");
+          btn.classList.add("active");
+          applyWindow(btn.dataset.window);
+        });
+
+        // threshold toggle (right column)
+        document.getElementById("thrToggle").addEventListener("click", (e) => {
+          e.currentTarget.classList.toggle("active");
+          const show = e.currentTarget.classList.contains("active");
+          chart.options.plugins.annotation.annotations.threshold.display = show;
+          chart.update();
+        });
+
+        function getWindowRange(kind) {
+          const now = Date.now();
+          const ms =
+            kind === "24h"
+              ? 24 * 3600e3
+              : kind === "7d"
+              ? 7 * 24 * 3600e3
+              : /*30d*/ 30 * 24 * 3600e3;
+          return { min: new Date(now - ms), max: new Date(now) };
+        }
+
+        function applyWindow(kind) {
+          const { min, max } = getWindowRange(kind);
+          const x = chart.options.scales.x;
+          x.min = min;
+          x.max = max;
+
+          // hour labels for 24h, date-only otherwise
+          if (kind === "24h") {
+            x.time.unit = "hour";
+            x.time.tooltipFormat = "MMM d, HH:mm";
+            x.time.displayFormats = { hour: "HH:mm" };
+            x.ticks.maxTicksLimit = 8;
+          } else {
+            x.time.unit = "day";
+            x.time.tooltipFormat = "MMM d";
+            x.time.displayFormats = { day: "MMM d" };
+            x.ticks.maxTicksLimit = kind === "7d" ? 7 : 6;
+          }
+
+          fitYToVisible(chart);
+          chart.update();
+        }
+
+        function fitYToVisible(chart) {
+          const xmin = chart.options.scales.x.min
+            ? +new Date(chart.options.scales.x.min)
+            : -Infinity;
+          const xmax = chart.options.scales.x.max
+            ? +new Date(chart.options.scales.x.max)
+            : +Infinity;
+          let lo = +Infinity,
+            hi = -Infinity,
+            pts = 0,
+            vis = 0;
+
+          chart.data.datasets.forEach((ds) => {
+            if (ds.hidden) return;
+            vis++;
+            ds.data.forEach((p) => {
+              const tx = +new Date(p.x);
+              if (tx >= xmin && tx <= xmax && Number.isFinite(p.y)) {
+                lo = Math.min(lo, p.y);
+                hi = Math.max(hi, p.y);
+                pts++;
+              }
+            });
+          });
+
+          if (pts > 0) {
+            chart.options.scales.y.suggestedMin = lo - 1;
+            chart.options.scales.y.suggestedMax = hi + 1;
+            setStatus(
+              `${vis} xfmr • ${pts} pts • Y ${lo.toFixed(1)}–${hi.toFixed(1)}°C`
+            );
+          } else {
+            chart.options.scales.y.suggestedMin = undefined;
+            chart.options.scales.y.suggestedMax = undefined;
+            setStatus(`${vis} xfmr • 0 pts in window`);
+          }
+        }
+
+        // initial state: 30d window, only initialVisible shown
+        applyWindow("30d");
+        fitYToVisible(chart);
+      })();
+    </script>
+  </body>
+</html>
