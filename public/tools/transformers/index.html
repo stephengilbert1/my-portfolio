@@ -47,7 +47,24 @@
       body {
         font-family: Outfit, Arial, Helvetica, sans-serif;
       }
-
+      .badge {
+        margin-left: 12px;
+        font-size: 12px;
+        line-height: 1;
+        border-radius: 999px;
+        padding: 2px 8px;
+        font-weight: 600;
+        background: #eef2ff;
+        color: #1e3a8a; /* soft indigo */
+      }
+      .badge.zero {
+        background: #dcfce7;
+        color: #166534;
+      } /* green for 0.0 hrs */
+      .badge.nonzero {
+        background: #fee2e2;
+        color: #991b1b;
+      } /* red for > 0.0 hrs */
       .chartwrap {
         position: relative;
         height: var(--chart-h);
@@ -89,25 +106,40 @@
         flex-direction: column;
         gap: 10px;
       }
-      .legendcol h3 {
-        margin: 0;
-        font-size: 14px;
+
+      .legendHeader {
+        display: grid;
+        grid-template-columns: minmax(120px, 1fr) 160px; /* left grows, right fixed */
+        align-items: center;
+        column-gap: 12px;
+        padding: 4px 6px 8px;
+        border-bottom: 1px solid var(--border);
         color: var(--muted);
+        font-size: 12px;
         font-weight: 600;
       }
-      #legend {
+
+      .legendHeader .durcol {
+        justify-self: start;
+        text-align: left;
+      }
+
+      /* Legend list scroll stays */
+      #legend.legendList {
         display: flex;
         flex-direction: column;
         gap: 8px;
         min-height: 46px;
-        max-height: calc(var(--chart-h) - 24px);
+        max-height: calc(var(--chart-h) - 48px);
         overflow: auto;
         padding-right: 2px;
       }
       .pill {
-        display: flex;
+        display: grid; /* was flex */
+        grid-template-columns: minmax(120px, 1fr) 160px;
         align-items: center;
-        gap: 8px;
+        column-gap: 12px;
+        width: 100%;
         padding: 6px 10px;
         border: 1px solid var(--border);
         border-radius: 999px;
@@ -118,6 +150,26 @@
       .pill:not(.active) {
         opacity: 0.55;
       }
+      /* Left cell inside pill: swatch + label */
+      .pill .left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .swatch {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--c);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      /* Right cell inside pill: badge, right aligned */
+      .pill .right {
+        justify-self: start;
+        text-align: left;
+      }
+
       .swatch {
         width: 10px;
         height: 10px;
@@ -145,6 +197,13 @@
         gap: 8px;
         align-items: center;
       }
+      /* Mobile: shrink duration column a bit */
+      @media (max-width: 900px) {
+        .legendHeader,
+        .pill {
+          grid-template-columns: minmax(100px, 1fr) 130px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -157,22 +216,31 @@
           <div class="chartwrap"><canvas id="chart"></canvas></div>
 
           <div class="chips" id="windows">
-            <button class="chip" data-window="24h">24h</button>
+            <button class="chip active" data-window="24h">24h</button>
             <button class="chip" data-window="7d">7 days</button>
-            <button class="chip active" data-window="30d">30 days</button>
+            <button class="chip" data-window="30d">30 days</button>
           </div>
 
           <div class="status" id="status"></div>
         </div>
 
         <!-- RIGHT: legend pills stacked vertically (+ threshold toggle) -->
+        <!-- RIGHT: legend pills stacked vertically (+ threshold toggle) -->
         <aside class="legendcol">
-          <div class="rightControls">
-            <h3>Transformers</h3>
-            <button class="chip" id="thrToggle">Threshold</button>
+          <!-- Header row aligned with pill columns -->
+          <div class="legendHeader">
+            <div class="col idcol">ID</div>
+            <div class="col durcol">
+              <span id="legendHeading">Over-Threshold Duration — 24h</span>
+            </div>
           </div>
-          <div id="legend"></div>
+
+          <!-- List of pills (each pill uses the same two-column grid) -->
+          <div id="legend" class="legendList"></div>
         </aside>
+      </div>
+      <div class="chips" id="options">
+        <button class="chip active" id="thrToggle">Hide threshold</button>
       </div>
     </div>
 
@@ -261,21 +329,32 @@
           afterUpdate(chart, args, opts) {
             const container = document.getElementById(opts.containerID);
             container.innerHTML = "";
-            chart.data.datasets.forEach((ds, idx) => {
+            chart.data.datasets.forEach((ds) => {
               const pill = document.createElement("button");
               pill.className = "pill" + (ds.hidden ? "" : " active");
+              pill.setAttribute("data-id", ds.label);
               pill.style.setProperty("--c", ds.borderColor);
-              pill.innerHTML = `<span class="swatch" style="--c:${ds.borderColor}"></span>${ds.label}`;
+              pill.innerHTML = `<span class="left">
+     <span class="swatch" style="--c:${ds.borderColor}"></span>
+     <span class="lbl">${ds.label}</span>
+   </span>
+   <span class="right">
+     <span class="badge" aria-label="time over threshold"></span>
+   </span>`;
+
               pill.onclick = () => {
                 ds.hidden = !ds.hidden;
                 pill.classList.toggle("active", !ds.hidden);
                 fitYToVisible(chart);
                 chart.update();
+                updateLegendHoursFromJSON(chart, raw);
               };
               container.appendChild(pill);
             });
+            updateLegendHoursFromJSON(chart, raw);
           },
         };
+
         Chart.register(htmlLegend);
 
         // chart
@@ -343,6 +422,8 @@
             b.classList.remove("active");
           btn.classList.add("active");
           applyWindow(btn.dataset.window);
+          chart.update();
+          updateLegendHoursFromJSON(chart, raw);
         });
 
         // threshold toggle (right column)
@@ -352,6 +433,9 @@
           chart.options.plugins.annotation.annotations.threshold.display = show;
           chart.update();
         });
+
+        fitYToVisible(chart);
+        updateLegendHoursFromJSON(chart, raw);
 
         function getWindowRange(kind) {
           const now = Date.now();
@@ -383,6 +467,13 @@
             x.ticks.maxTicksLimit = kind === "7d" ? 7 : 6;
           }
 
+          const heading = document.getElementById("legendHeading");
+          if (heading) {
+            heading.textContent = `Duration over Threshold (last ${
+              kind === "24h" ? "24h" : kind === "7d" ? "7 days" : "30 days"
+            })`;
+          }
+
           fitYToVisible(chart);
           chart.update();
         }
@@ -410,6 +501,7 @@
                 pts++;
               }
             });
+            updateLegendHoursFromJSON(chart, raw);
           });
 
           if (pts > 0) {
@@ -425,9 +517,40 @@
           }
         }
 
+        // helpers to read current window key: '24h' | '7d' | '30d'
+        function currentWindowKey() {
+          const active = document.querySelector("#windows .chip.active");
+          return active?.dataset.window || "24h";
+        }
+
+        function updateLegendHoursFromJSON(chart, raw) {
+          const key = currentWindowKey();
+          document.querySelectorAll("#legend .pill").forEach((pill) => {
+            const id = pill.getAttribute("data-id");
+            const badge = pill.querySelector(".badge");
+            if (!badge || !id) return;
+
+            const h = Number(raw[id]?.h?.[key] ?? 0);
+            badge.textContent = `${h.toFixed(1)} hrs`;
+
+            // color: green if 0.0 hrs, red otherwise
+            badge.classList.remove("zero", "nonzero");
+            badge.classList.add(h > 0 ? "nonzero" : "zero");
+
+            badge.style.display = ""; // always show
+          });
+        }
+
+        // Make threshold visible by default
+        const thrBtn = document.getElementById("thrToggle");
+        thrBtn.classList.add("active");
+        chart.options.plugins.annotation.annotations.threshold.display = true;
+        chart.update();
+
         // initial state: 30d window, only initialVisible shown
-        applyWindow("30d");
+        applyWindow("24h");
         fitYToVisible(chart);
+        updateLegendHoursFromJSON(chart, raw);
       })();
     </script>
   </body>
