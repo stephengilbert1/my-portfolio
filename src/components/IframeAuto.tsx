@@ -1,3 +1,4 @@
+// src/components/IframeAuto.tsx
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -10,6 +11,7 @@ type Props = {
 
 export default function IframeAuto({ src, title, className }: Props) {
   const ref = useRef<HTMLIFrameElement>(null);
+  const roRef = useRef<ResizeObserver | null>(null);
 
   useEffect(() => {
     const iframe = ref.current;
@@ -17,11 +19,14 @@ export default function IframeAuto({ src, title, className }: Props) {
 
     const resize = () => {
       try {
-        const doc = iframe.contentDocument || iframe.contentWindow?.document;
+        const doc =
+          iframe.contentDocument ?? iframe.contentWindow?.document ?? null;
         if (!doc) return;
+        const html = doc.documentElement;
+        const body = doc.body;
         const h = Math.max(
-          doc.documentElement?.scrollHeight || 0,
-          doc.body?.scrollHeight || 0
+          html ? html.scrollHeight : 0,
+          body ? body.scrollHeight : 0
         );
         iframe.style.height = `${h}px`;
       } catch {
@@ -32,12 +37,13 @@ export default function IframeAuto({ src, title, className }: Props) {
     const onLoad = () => {
       resize();
       try {
-        const doc = iframe.contentDocument || iframe.contentWindow?.document;
+        const doc =
+          iframe.contentDocument ?? iframe.contentWindow?.document ?? null;
         if (!doc) return;
-        const ro = new ResizeObserver(resize);
+        const ro = new ResizeObserver(() => resize());
+        roRef.current = ro;
         ro.observe(doc.documentElement);
         ro.observe(doc.body);
-        (iframe as any)._ro = ro; // store to disconnect on unmount
       } catch {}
     };
 
@@ -48,10 +54,11 @@ export default function IframeAuto({ src, title, className }: Props) {
     const t = setTimeout(resize, 600);
 
     return () => {
-      clearTimeout(t);
-      window.removeEventListener("resize", resize);
+      window.clearTimeout(t);
       iframe.removeEventListener("load", onLoad);
-      (iframe as any)._ro?.disconnect?.();
+      window.removeEventListener("resize", resize);
+      roRef.current?.disconnect();
+      roRef.current = null;
     };
   }, [src]);
 
@@ -63,7 +70,6 @@ export default function IframeAuto({ src, title, className }: Props) {
       loading="lazy"
       className={className}
       style={{ width: "100%", border: 0, display: "block" }}
-      scrolling="no"
     />
   );
 }
