@@ -438,14 +438,14 @@
         updateLegendHoursFromJSON(chart, raw);
 
         function getWindowRange(kind) {
-          const now = Date.now();
+          const end = last ? last.getTime() : Date.now();
           const ms =
             kind === "24h"
               ? 24 * 3600e3
               : kind === "7d"
               ? 7 * 24 * 3600e3
               : /*30d*/ 30 * 24 * 3600e3;
-          return { min: new Date(now - ms), max: new Date(now) };
+          return { min: new Date(end - ms), max: new Date(end) };
         }
 
         function applyWindow(kind) {
