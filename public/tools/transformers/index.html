@@ -263,6 +263,8 @@
           return;
         }
         const raw = await res.json();
+        console.log("Raw data loaded:", raw);
+
         const ids = Object.keys(raw).sort();
         if (!ids.length) {
           setStatus("No transformers");
@@ -298,24 +300,59 @@
         ];
         const initialVisible = ids.includes("0001") ? "0001" : ids[0];
 
-        const datasets = ids.map((id, i) => {
-          const s = raw[id] || { t: [], y: [] };
-          const data = (s.t || [])
+        const datasets = ids.flatMap((id, i) => {
+          const s = raw[id] || { t: [], y: [], ambient: [] };
+          const baseColor = colors[i % colors.length];
+
+          // Build top-oil temperature dataset (always present)
+          const topOilData = (s.t || [])
             .map((ts, k) => ({ x: new Date(ts), y: Number(s.y?.[k]) }))
             .filter(
               (p) => Number.isFinite(p.y) && !Number.isNaN(p.x.getTime())
             );
-          return {
-            label: id,
-            data,
-            borderColor: colors[i % colors.length],
-            backgroundColor: colors[i % colors.length],
-            borderWidth: 2.25,
-            tension: 0.25,
-            pointRadius: 0,
-            fill: false,
-            hidden: id !== initialVisible,
-          };
+
+          const ds = [
+            {
+              label: id,
+              data: topOilData,
+              borderColor: baseColor,
+              backgroundColor: baseColor,
+              borderWidth: 2.25,
+              tension: 0.25,
+              pointRadius: 0,
+              fill: false,
+              hidden: id !== initialVisible,
+              showInLegend: true,
+            },
+          ];
+
+          // Add ambient temperature dataset only if ambient data exists and is not empty
+          if (Array.isArray(s.ambient) && s.ambient.length > 0) {
+            const ambientData = (s.t || [])
+              .map((ts, k) => ({ x: new Date(ts), y: Number(s.ambient?.[k]) }))
+              .filter(
+                (p) => Number.isFinite(p.y) && !Number.isNaN(p.x.getTime())
+              );
+
+            if (ambientData.length > 0) {
+              ds.push({
+                label: `${id} Ambient`,
+                data: ambientData,
+                borderColor: shadeColor(colors[i % colors.length], 60), // lighter color
+                backgroundColor: shadeColor(colors[i % colors.length], 60),
+                borderWidth: 1.5,
+                borderDash: [5, 5],
+                tension: 0.25,
+                pointRadius: 0,
+                fill: false,
+                hidden: id !== initialVisible, // hidden by default
+                showInLegend: false, // excluded from legend
+                metadata: { parentId: id },
+              });
+            }
+          }
+
+          return ds;
         });
 
         // register plugins
@@ -330,6 +367,7 @@
             const container = document.getElementById(opts.containerID);
             container.innerHTML = "";
             chart.data.datasets.forEach((ds) => {
+              if (ds.showInLegend === false) return;
               const pill = document.createElement("button");
               pill.className = "pill" + (ds.hidden ? "" : " active");
               pill.setAttribute("data-id", ds.label);
@@ -345,6 +383,13 @@
               pill.onclick = () => {
                 ds.hidden = !ds.hidden;
                 pill.classList.toggle("active", !ds.hidden);
+                // Find ambient dataset(s) for this transformer
+                chart.data.datasets.forEach((otherDs) => {
+                  if (otherDs.metadata?.parentId === ds.label) {
+                    otherDs.hidden = ds.hidden; // sync ambient visibility with transformer main line
+                  }
+                });
+
                 fitYToVisible(chart);
                 chart.update();
                 updateLegendHoursFromJSON(chart, raw);
@@ -380,6 +425,7 @@
                 grid: { color: "rgba(0,0,0,0.06)" },
               },
               y: {
+                min: 0,
                 title: { display: true, text: "°C" },
                 ticks: { maxTicksLimit: 6 },
                 grid: { color: "rgba(0,0,0,0.06)" },
@@ -436,6 +482,28 @@
 
         fitYToVisible(chart);
         updateLegendHoursFromJSON(chart, raw);
+
+        function shadeColor(color, percent) {
+          // Color in hex format: "#rrggbb"
+          let f = parseInt(color.slice(1), 16),
+            t = percent < 0 ? 0 : 255,
+            p = Math.abs(percent) / 100,
+            R = f >> 16,
+            G = (f >> 8) & 0x00ff,
+            B = f & 0x0000ff;
+
+          return (
+            "#" +
+            (
+              0x1000000 +
+              (Math.round((t - R) * p) + R) * 0x10000 +
+              (Math.round((t - G) * p) + G) * 0x100 +
+              (Math.round((t - B) * p) + B)
+            )
+              .toString(16)
+              .slice(1)
+          );
+        }
 
         function getWindowRange(kind) {
           const end = last ? last.getTime() : Date.now();
@@ -531,6 +599,7 @@
             if (!badge || !id) return;
 
             const h = Number(raw[id]?.h?.[key] ?? 0);
+            console.log(`Transformer ${id} hours over threshold (${key}):`, h);
             badge.textContent = `${h.toFixed(1)} hrs`;
 
             // color: green if 0.0 hrs, red otherwise
