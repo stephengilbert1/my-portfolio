@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Stephen Gilbert Portfolio Website
+
+This is my personal portfolio website, built with TypeScript and React, and hosted on Vercel. It showcases my data science and software development projects, including interactive visualizations, project write-ups, and technical demos.
+
+## Features
+
+- Clean, modern UI with responsive design for desktop and mobile devices.
+- Interactive project showcases combining web-based charts and data insights.
+- Integration with backend services and APIs to provide real-time data where applicable.
+- Smooth navigation and user experience enhancements for demonstration purposes.
+- Deployed with Vercel for fast, reliable hosting and easy updates.
+
+## Technologies Used
+
+- TypeScript with React for robust, type-safe frontend development.
+- Next.js framework for server-side rendering and static site generation.
+- Chart.js integrated for interactive visualizations.
+- CSS custom properties, grid, and flexbox for layout and styling.
+- Version control with Git and continuous deployment via Vercel.
+
+## About Me
+
+I’m a data enthusiast and software developer focusing on projects that combine data science, machine learning, and full-stack development. This portfolio demonstrates my skills through real-world projects using modern tools and best practices.
 
 ## Getting Started
 
-First, run the development server:
+If you want to run this website locally:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone the repository.
+2. Run `npm install` to install dependencies.
+3. Run `npm run dev` to start the development server.
+4. Open `http://localhost:3000` in your browser.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The website is deployed automatically via Vercel on every pushed commit to the main branch, enabling quick updates and continuous integration.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+I welcome feedback and collaboration. Feel free to explore the source code and reach out with questions or opportunities!
