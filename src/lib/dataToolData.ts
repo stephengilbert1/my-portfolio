@@ -24,19 +24,19 @@ export type DataTool = {
 
 export const dataTools: DataTool[] = [
   {
-    title: "Transformer Data Pipeline",
+    title: "Transformer Thermal Health Monitoring",
     slug: "transformer-data-pipeline",
     description:
-      "I’m exploring Python data tools, in this case Pandas, while pulling from the same Supabase database my full-stack dashboard uses. This turns raw transformer temperature readings into something you can explore and talk about.",
-    why: "The goal is to build a real world data-science toolkit tested on real data and see what value this could bring to industry—data cleaning, summary statistics, rolling averages, thresholds, and identifying trends.",
+      "I’m exploring Python data tools like Pandas while pulling temperature data from my Supabase database—the same one used by my full-stack monitoring dashboard. This project transforms raw transformer temperature readings into actionable insights, enabling early detection of overheating risks.",
+    why: "Transformers often suffer from thermal overloads leading to premature failures and unplanned outages, posing safety risks and increasing operating costs. Currently, many systems wait for failures before acting (“run-to-failure”). My goal is to build a real-world data science toolkit tested on actual transformer temperature data to provide early warnings through data cleaning, analysis, and visualization.",
     features: [
-      "Pulls the last 30 days from my Supabase Postgres (same DB as my dashboard), with paging.",
-      "Cleans timestamps and temps in pandas; builds simple summaries.",
-      "Exports a small series.json file that the web page reads.",
-      "Interactive chart (Chart.js): legend pills to toggle transformers, 24h/7d/30d window, optional threshold line.",
-      "Better UX: fewer x-axis labels, auto-fit y-axis, wider layout, no layout shift.",
-      "Easy to refresh: re-run the notebook/script and replace series.json.",
-      "In progress: rolling-avg toggle, outlier flags, and download buttons.",
+      "Pulls the last 30 days of temperature data from Supabase Postgres with paging support.",
+      "Cleans and prepares timestamps and temperatures using Pandas; computes summary statistics and rolling averages.",
+      "Exports a JSON data file consumed by an interactive Chart.js web chart.",
+      "Chart includes toggles for transformers, time windows (24h, 7d, 30d), and optional threshold lines.",
+      "Improved UX with fewer x-axis labels, auto y-axis fitting, and a widescreen layout.",
+      "Easy refresh workflow: rerun notebook/script to update data and visuals seamlessly.",
+      "In progress: rolling average toggle, outlier flags, and data download functionality.",
     ],
     tags: ["Python", "Pandas", "Matplotlib", "Supabase", "Data Analysis"],
     githubUrl: "https://github.com/stephengilbert1/transformer-data-pipeline",
