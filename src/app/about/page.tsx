@@ -1,4 +1,5 @@
 // src/app/about/page.tsx
+import Image from "next/image";
 
 export default function AboutPage() {
   return (
@@ -30,9 +31,11 @@ export default function AboutPage() {
       </p>
       <div className="mt-10 space-y-8">
         <div>
-          <img
+          <Image
             src="/images/backcountry-skiing.jpg"
             alt="Stephen skiing in backcountry"
+            width={3024}
+            height={4032}
             className="w-full rounded-xl border shadow-sm"
           />
           <p className="mt-2 text-sm text-slate-500 text-center">
@@ -42,9 +45,11 @@ export default function AboutPage() {
         </div>
 
         <div>
-          <img
+          <Image
             src="/images/running.jpg"
             alt="Stephen running"
+            width={2048}
+            height={1365}
             className="w-full rounded-xl border shadow-sm"
           />
           <p className="mt-2 text-sm text-slate-500 text-center">
@@ -53,9 +58,11 @@ export default function AboutPage() {
         </div>
 
         <div>
-          <img
+          <Image
             src="/images/surfing2.jpg"
             alt="Stephen surfing"
+            width={1080}
+            height={1080}
             className="w-full rounded-xl border shadow-sm"
           />
           <p className="mt-2 text-sm text-slate-500 text-center">

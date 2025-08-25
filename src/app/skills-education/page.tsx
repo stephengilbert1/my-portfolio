@@ -32,7 +32,7 @@ export default function SkillsPage() {
           University of Canterbury - Bachelor of Engineering with Honours in
           Mechatronics Engineering.
           <br />
-          University of Canterbury - Emerging Leaders' Scholarship. <br />
+          University of Canterbury - Emerging Leaders&apos; Scholarship. <br />
           University of Canterbury - Engineering High Achievers Award.
         </p>
       </section>
