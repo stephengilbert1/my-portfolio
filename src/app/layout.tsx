@@ -37,6 +37,9 @@ export default function RootLayout({
             <Link href="/ai-data-tools" className="hover:underline">
               AI & Data Tools
             </Link>
+            <Link href="/skills-education" className="hover:underline">
+              Skills & Education
+            </Link>
             <Link href="/about" className="hover:underline">
               About
             </Link>
