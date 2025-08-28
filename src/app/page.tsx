@@ -14,7 +14,8 @@ export default function Home() {
       </div>
       <section className="relative z-10 flex flex-col items-center justify-center py-8 text-black text-center">
         <p className="mt-4 text-lg text-slate-600">
-          Building web applications and tools to solve real-world problems.
+          Building practical tools to turn data into technical insights and
+          solutions.
         </p>
         <div className="mt-6 flex justify-center gap-4">
           <Link
