@@ -27,16 +27,6 @@ export default async function ProjectPage({
         {/* Links */}
         <section className="mb-4">
           <section className="flex gap-4 mt-6 py-2">
-            {project.demoUrl && (
-              <a
-                href={project.demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-blue-600 text-white font-semibold px-4 py-2 rounded hover:bg-blue-700 transition"
-              >
-                Live Demo
-              </a>
-            )}
             {project.githubUrl && (
               <a
                 href={project.githubUrl}

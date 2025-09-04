@@ -37,10 +37,10 @@ export type DataTool = {
 
 export const dataTools: DataTool[] = [
   {
-    title: "Transformer Thermal Health Monitoring",
-    slug: "transformer-data-pipeline",
+    title: "Transformer Time Series Analysis",
+    slug: "transformer-time-series-analysis",
     description:
-      "This project processes transformer temperature data from a Supabase database using Python tools like Pandas, NumPy, and Scikit-learn. Its purpose is to clean, analyze, and turn raw temperature readings into actionable insights for early detection of overheating risks. These tools were chosen for their reliability and flexibility in data handling and machine learning. Future work will expand on this with additional models to improve predictive capabilities.",
+      "This project applies machine learning and other data science techniques to turn raw temperature readings into actionable insights for early detection of overheating risks. Future work will expand on this with additional models to improve predictive capabilities.",
     why: "Transformers often suffer from thermal overloads leading to premature failures and unplanned outages, posing safety risks and increasing operating costs. Currently, many systems wait for failures before acting (“run-to-failure”). My goal is to build a real-world data science toolkit tested on actual transformer temperature data to provide early warnings through data cleaning, analysis, and visualization.",
     features: [
       "Pulls the last 30 days of temperature data from Supabase Postgres with paging support.",
@@ -53,16 +53,18 @@ export const dataTools: DataTool[] = [
     ],
     tags: [
       "Python",
+      "Machine Learning",
+      "Data Analysis",
       "Pandas",
       "Scikit-learn",
       "Matplotlib",
-      "Supabase",
-      "Data Analysis",
     ],
     githubUrl: "https://github.com/stephengilbert1/transformer-data-pipeline",
+    demoUrl: "/ai-data-tools/transformer-time-series-analysis",
     interactiveRawDataUrl: "/tools/transformers/index.html",
     plot1Url: "/tools/transformers/linear_regression_actual_vs_predicted.html",
     plot2Url: "/tools/transformers/linear_regression_residuals.html",
+    imageThumb: "/images/time-series-analysis-symbol.png",
     category: "Transformers",
     sections: [
       {
