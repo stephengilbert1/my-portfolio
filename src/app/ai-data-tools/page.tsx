@@ -49,9 +49,9 @@ export default function AiDataToolsPage() {
                   GitHub
                 </Link>
               )}
-              {tool.analysisUrl && (
+              {tool.interactiveRawDataUrl && (
                 <Link
-                  href={tool.analysisUrl}
+                  href={tool.interactiveRawDataUrl}
                   target="_blank"
                   className="text-sky-600 hover:underline"
                 >

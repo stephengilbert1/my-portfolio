@@ -18,10 +18,13 @@ export default async function ProjectPage({
 
   return (
     <main className="max-w-4xl mx-auto px-6 py-16">
+      {/* Project Title */}
       <section className="mb-10">
         <h1 className="text-4xl font-bold text-slate-900 mb-4">
           {project.title}
         </h1>
+
+        {/* Links */}
         <section className="mb-4">
           <section className="flex gap-4 mt-6 py-2">
             {project.demoUrl && (
@@ -57,58 +60,84 @@ export default async function ProjectPage({
           </div>
         </section>
 
+        {/* Description */}
         <p className="text-lg text-slate-700 mb-6">{project.description}</p>
-
-        {project.analysisUrl && (
-          <section className="mt-10">
-            <h2 className="sr-only">Interactive Analysis</h2>
-            <div className="rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-              <IframeAuto
-                src={project.analysisUrl}
-                title={`${project.title} demo`}
-                className="w-full" // no fixed height here
-              />
-            </div>
-            <p className="text-center text-slate-500 mt-3">
-              <a
-                href={project.analysisUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-slate-700"
-              >
-                Open full screen
-              </a>
-            </p>
-          </section>
-        )}
-
-        {project.image1 && (
-          <div className="mt-4">
-            <img
-              src={project.image1.src}
-              alt="Screenshot 1"
-              className="w-full rounded-xl border shadow-sm"
-            />
-            <p className="text-sm text-slate-500 mt-2">
-              {project.image1.caption}
-            </p>
-          </div>
-        )}
-
-        {project.image2 && (
-          <div className="mt-6">
-            <img
-              src={project.image2.src}
-              alt="Screenshot 2"
-              className="w-full rounded-xl border shadow-sm"
-            />
-            <p className="text-sm text-slate-500 mt-2">
-              {project.image2.caption}
-            </p>
-          </div>
-        )}
       </section>
 
+      {/* Table of Contents */}
+      {project.sections && (
+        <nav className="mb-10">
+          <h1 className="text-3xl font-bold text-slate-900 mb-4">Contents</h1>
+          <ul className="list-disc list-inside space-y-1">
+            {project.sections.map((section) => (
+              <li key={section.id}>
+                <a
+                  href={`#${section.id}`}
+                  className="text-blue-600 hover:underline"
+                >
+                  {section.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+
+      {/* Sections and Plots */}
+      {project.sections &&
+        project.sections.map((section) => (
+          <section id={section.id} key={section.id} className="mb-16">
+            <h2 className="text-3xl font-bold mb-4">{section.label}</h2>
+
+            {section.content && (
+              <p className="mb-6 text-slate-700 whitespace-pre-line">
+                {section.content}
+              </p>
+            )}
+
+            {section.contents.map((sub) => {
+              const url = project[sub.urlKey];
+              if (typeof url !== "string") return null;
+
+              return (
+                <section id={sub.id} key={sub.id} className="mb-12">
+                  <h3 className="text-xl font-semibold mb-2">{sub.label}</h3>
+
+                  {sub.description && (
+                    <p className="mb-4 text-slate-600 whitespace-pre-line">
+                      {sub.description}
+                    </p>
+                  )}
+
+                  <div
+                    className="rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+                    style={{ overflow: "hidden" }}
+                  >
+                    <IframeAuto
+                      src={url}
+                      title={`${project.title} - ${sub.label}`}
+                      className="w-full"
+                      style={{ overflow: "hidden", display: "block" }}
+                    />
+                  </div>
+
+                  <p className="text-center text-slate-500 mt-3">
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:text-slate-700"
+                    >
+                      Open full screen
+                    </a>
+                  </p>
+                </section>
+              );
+            })}
+          </section>
+        ))}
+
+      {/* Why I Built It and Key Features */}
       <section className="grid md:grid-cols-2 gap-8 mb-10">
         <div>
           <h2 className="text-2xl font-semibold text-slate-800 mb-2">

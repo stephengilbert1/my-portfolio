@@ -7,9 +7,10 @@ type Props = {
   src: string;
   title: string;
   className?: string;
+  style?: React.CSSProperties;
 };
 
-export default function IframeAuto({ src, title, className }: Props) {
+export default function IframeAuto({ src, title, className, style }: Props) {
   const ref = useRef<HTMLIFrameElement>(null);
   const roRef = useRef<ResizeObserver | null>(null);
 
@@ -69,7 +70,7 @@ export default function IframeAuto({ src, title, className }: Props) {
       title={title}
       loading="lazy"
       className={className}
-      style={{ width: "100%", border: 0, display: "block" }}
+      style={{ width: "100%", border: 0, display: "block", ...style }}
     />
   );
 }
